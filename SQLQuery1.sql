@@ -40,17 +40,19 @@ SELECT * FROM Atores WHERE Genero = 'F' ORDER BY PrimeiroNome
 SELECT
 	Filmes.Nome,
 	Generos.Genero
-FROM
-	Filmes
-INNER JOIN Generos ON Filmes.Id = Generos.Id
+FROM 
+((FilmesGenero
+INNER JOIN Filmes ON FilmesGenero.IdFilme = Filmes.Id)
+INNER JOIN Generos ON FilmesGenero.IdGenero = Generos.Id)
 
 -- 11 - Buscar o nome do filme e o gênero do tipo "Mistério"
 SELECT 
 	Filmes.Nome,
 	Generos.Genero
 FROM
-	Filmes
-INNER JOIN Generos ON Filmes.Id = Generos.Id
+((FilmesGenero
+INNER JOIN Filmes ON FilmesGenero.IdFilme = Filmes.Id)
+INNER JOIN Generos ON FilmesGenero.IdGenero = Generos.Id)
 WHERE Generos.Genero = 'Mistério'
 
 
@@ -61,5 +63,8 @@ SELECT
 	Atores.UltimoNome,
 	ElencoFilme.Papel
 FROM
-	Filmes
-INNER JOIN Atores ON Filmes.Id = Atores.Id, ElencoFilme
+	((ElencoFilme
+	
+INNER JOIN Filmes ON ElencoFilme.IdFilme = Filmes.Id)
+INNER JOIN Atores ON ElencoFilme.Id = Atores.Id)
+INNER JOIN Generos ON ElencoFilme.IdAtor = Generos.Id
